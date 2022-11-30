@@ -8,10 +8,6 @@ TODO
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-
-/openCVLibrary349/etc
-/openCVLibrary349/java
-/openCVLibrary349/native
 .DS_Store
 /build
 /captures
