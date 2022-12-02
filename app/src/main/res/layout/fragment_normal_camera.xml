@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".Fragment.EdgeCameraFragment">
+    tools:context=".fragment.EdgeCameraFragment">
 
     <org.opencv.android.JavaCameraView
         android:id="@+id/CameraView"

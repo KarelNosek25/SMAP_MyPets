@@ -1,4 +1,4 @@
-package com.example.smap_mypets.Fragment;
+package com.example.smap_mypets.fragment;
 
 import android.os.Bundle;
 import android.view.View;

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -13,10 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.smap_mypets.Fragment.NormalCameraFragment;
-import com.example.smap_mypets.Fragment.EdgeCameraFragment;
-import com.example.smap_mypets.Fragment.SettingsFragment;
+import com.example.smap_mypets.database.UserDatabase;
+import com.example.smap_mypets.fragment.LoginFragment;
+import com.example.smap_mypets.fragment.NormalCameraFragment;
+import com.example.smap_mypets.fragment.EdgeCameraFragment;
+import com.example.smap_mypets.fragment.SettingsFragment;
+import com.example.smap_mypets.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
@@ -24,12 +29,23 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     private Button btnNormalCamera;
     private Button btnEdgeCamera;
 
+    private UserDatabase userDatabase;
+    private User user;
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //kontrola zdali je uživatel přihlášen
+        if (!mainActivity.getUser().isAuthenticated()) {
+            Intent i0 = new Intent(this, LoginFragment.class);
+            startActivity(i0);
+        }
+
+        userDatabase = new UserDatabase(getApplicationContext());
+        user = userDatabase.getUser();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Výběr kamery");
@@ -80,5 +96,10 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         } else {
             startActivity(i3);
         }
+    }
+
+    //získání údajů uživatele
+    public User getUser() {
+        return user;
     }
 }

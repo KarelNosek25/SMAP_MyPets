@@ -27,13 +27,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Fragment.EdgeCameraFragment"
+            android:name=".fragment.EdgeCameraFragment"
             android:exported="true"/>
         <activity
-            android:name=".Fragment.NormalCameraFragment"
+            android:name=".fragment.NormalCameraFragment"
             android:exported="true"/>
         <activity
-            android:name=".Fragment.SettingsFragment"
+            android:name=".fragment.SettingsFragment"
             android:exported="true"/>
 
     </application>
