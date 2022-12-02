@@ -38,7 +38,7 @@ public class SettingsFragment extends AppCompatActivity implements ActivityCompa
         toolbar.setTitle("Nastavení");
 
         btnAskRight = findViewById(R.id.btn_foto_ask);
-        //btnAskRight.setOnClickListener(v -> requestCamera());
+        btnAskRight.setOnClickListener(v -> requestCamera());
 
 
         //spodní navigace (domů, přidat, nastavení)
@@ -63,17 +63,16 @@ public class SettingsFragment extends AppCompatActivity implements ActivityCompa
         startActivity(i1);
     }
 
-    /*
     //požádání o přidělení práv
     private void requestCamera() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             // Práva máme, není potřeba o ně žádat
-            Toast.makeText(getContext(), "Práva již přidělena, není nutné znovu žádat.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Práva již přidělena, není nutné znovu žádat.", Toast.LENGTH_LONG).show();
         } else {
             // Požádáme o práva
             int PERMISSION_REQUEST_CAMERA = 0;
-            ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
-            Toast.makeText(getContext(), "Požádáno o práva.", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
+            Toast.makeText(this, "Požádáno o práva.", Toast.LENGTH_SHORT).show();
         }
-    }*/
+    }
 }
