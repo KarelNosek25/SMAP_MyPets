@@ -2,6 +2,7 @@ package com.example.smap_mypets;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -38,11 +39,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //kontrola zdali je uživatel přihlášen
-        if (!mainActivity.getUser().isAuthenticated()) {
-            Intent i0 = new Intent(this, LoginFragment.class);
-            startActivity(i0);
-        }
+        Intent i0 = new Intent(this, LoginFragment.class);
+        startActivity(i0);
 
         userDatabase = new UserDatabase(getApplicationContext());
         user = userDatabase.getUser();
