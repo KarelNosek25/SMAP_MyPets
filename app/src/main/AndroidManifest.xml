@@ -27,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".fragment.EdgeCameraFragment"
             android:exported="true"/>
@@ -37,7 +38,7 @@
             android:name=".fragment.SettingsFragment"
             android:exported="true"/>
         <activity
-            android:name=".fragment.LoginFragment"
+            android:name=".fragment.HomeFragment"
             android:exported="true"/>
     </application>
 </manifest>

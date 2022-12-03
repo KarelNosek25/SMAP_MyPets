@@ -13,7 +13,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.smap_mypets.MainActivity;
 import com.example.smap_mypets.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -33,7 +32,6 @@ public class SettingsFragment extends AppCompatActivity implements ActivityCompa
         btnAskRight = findViewById(R.id.btn_foto_ask);
         btnAskRight.setOnClickListener(v -> requestCamera());
 
-
         //spodní navigace (domů, přidat, nastavení)
         BottomNavigationView bottomNav = findViewById(R.id.navigation);
         bottomNav.getMenu().findItem(R.id.navigation_settings).setChecked(true);
@@ -48,11 +46,11 @@ public class SettingsFragment extends AppCompatActivity implements ActivityCompa
             }
             return false;
         });
-
     }
 
+    //otevření domovské obrazovky
     private void openHome() {
-        Intent i1 = new Intent(this, MainActivity.class);
+        Intent i1 = new Intent(this, HomeFragment.class);
         startActivity(i1);
     }
 
