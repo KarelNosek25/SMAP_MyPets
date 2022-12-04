@@ -29,4 +29,6 @@
     <string name="deleno">:</string>
     <string name="domu">Domů</string>
     <string name="nastaveni">Nastavení</string>
+    <string name="normalni_kamera">Normální kamera</string>
+    <string name="hranova_kamera">Hranová kamera</string>
 </resources>
