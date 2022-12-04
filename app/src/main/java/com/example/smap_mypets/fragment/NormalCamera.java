@@ -14,7 +14,7 @@ import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
-public class EdgeCameraFragment extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class NormalCamera extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;

@@ -16,7 +16,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
-public class NormalCameraFragment extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class EdgeCamera extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;

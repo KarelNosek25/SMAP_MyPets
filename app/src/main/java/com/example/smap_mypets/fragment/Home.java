@@ -17,7 +17,7 @@ import com.example.smap_mypets.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeFragment extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class Home extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private Button btnNormalCamera;
     private Button btnEdgeCamera;
@@ -28,7 +28,6 @@ public class HomeFragment extends AppCompatActivity implements ActivityCompat.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_home);
 
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Výběr kamery");
 
@@ -36,7 +35,7 @@ public class HomeFragment extends AppCompatActivity implements ActivityCompat.On
         btnNormalCamera.setOnClickListener(v -> openNormalCamera());
 
         btnEdgeCamera = findViewById(R.id.edge_camera_button);
-        btnEdgeCamera.setOnClickListener(v -> openEdgeCamera());
+        btnEdgeCamera.setOnClickListener(v -> openEdgeCameraSettings());
 
         //spodní navigace (domů a nastavení)
         BottomNavigationView bottomNav = findViewById(R.id.navigation);
@@ -54,15 +53,15 @@ public class HomeFragment extends AppCompatActivity implements ActivityCompat.On
         });
     }
 
-    //otevřít nastavení
+    //otevřít nastavení (práva k používání kamery)
     private void openSettings() {
-        Intent i1 = new Intent(this, SettingsFragment.class);
+        Intent i1 = new Intent(this, Settings.class);
         startActivity(i1);
     }
 
     //otevření normální kamery + kontrola práv
     public void openNormalCamera() {
-        Intent i2 = new Intent(this, EdgeCameraFragment.class);
+        Intent i2 = new Intent(this, NormalCamera.class);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Nejsou udělena práva k používání fotoaparátu!", Toast.LENGTH_SHORT).show();
         } else {
@@ -70,13 +69,9 @@ public class HomeFragment extends AppCompatActivity implements ActivityCompat.On
         }
     }
 
-    //otevření hranové kamery + kontrola práv
-    public void openEdgeCamera() {
-        Intent i3 = new Intent(this, NormalCameraFragment.class);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Nejsou udělena práva k používání fotoaparátu!", Toast.LENGTH_SHORT).show();
-        } else {
-            startActivity(i3);
-        }
+    //otevření nastavení hranové kamery
+    public void openEdgeCameraSettings() {
+        Intent i3 = new Intent(this, EdgeCameraSettings.class);
+        startActivity(i3);
     }
 }

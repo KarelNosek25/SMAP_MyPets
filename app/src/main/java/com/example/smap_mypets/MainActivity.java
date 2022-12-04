@@ -19,7 +19,7 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
-import com.example.smap_mypets.fragment.HomeFragment;
+import com.example.smap_mypets.fragment.Home;
 
 import java.util.concurrent.Executor;
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     //otevření domovské obrazovky
     private void openHome() {
-        Intent i1 = new Intent(this, HomeFragment.class);
+        Intent i1 = new Intent(this, Home.class);
         startActivity(i1);
     }
 }

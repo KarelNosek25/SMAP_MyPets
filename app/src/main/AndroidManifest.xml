@@ -29,16 +29,19 @@
         </activity>
 
         <activity
-            android:name=".fragment.EdgeCameraFragment"
+            android:name=".fragment.NormalCamera"
             android:exported="true"/>
         <activity
-            android:name=".fragment.NormalCameraFragment"
+            android:name=".fragment.EdgeCamera"
             android:exported="true"/>
         <activity
-            android:name=".fragment.SettingsFragment"
+            android:name=".fragment.Settings"
             android:exported="true"/>
         <activity
-            android:name=".fragment.HomeFragment"
+            android:name=".fragment.Home"
+            android:exported="true"/>
+        <activity
+            android:name=".fragment.EdgeCameraSettings"
             android:exported="true"/>
     </application>
 </manifest>

@@ -5,9 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@color/secondaryColor"
-    tools:context=".fragment.Home">
+    android:background="@color/secondaryColor">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -18,38 +16,26 @@
         android:scrollbarSize="8dp"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Přehled"
         app:titleTextAppearance="@style/yourstyle"
         app:titleTextColor="@color/secondaryColor" />
 
     <Button
-        android:id="@+id/normal_camera_button"
+        android:id="@+id/btn_startCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/normalni_kamera"
+        android:layout_marginRight="60dp"
+        android:text="@string/start"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="@+id/btn_back" />
 
-    <Button
-        android:id="@+id/edge_camera_button"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/navigation"
-        android:layout_below="@+id/normal_camera_button"
-        android:layout_marginTop="40dp"
-        android:text="@string/hranova_kamera"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/normal_camera_button" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginBottom="60dp"
+        android:text="@string/zpet"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat;
 import com.example.smap_mypets.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class SettingsFragment extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class Settings extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private Button btnAskRight;
 
@@ -50,7 +50,7 @@ public class SettingsFragment extends AppCompatActivity implements ActivityCompa
 
     //otevření domovské obrazovky
     private void openHome() {
-        Intent i1 = new Intent(this, HomeFragment.class);
+        Intent i1 = new Intent(this, Home.class);
         startActivity(i1);
     }
 
