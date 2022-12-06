@@ -1,5 +1,6 @@
 package com.example.smap_mypets.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class EdgeCamera extends AppCompatActivity implements CameraBridgeViewBas
     BaseLoaderCallback baseLoaderCallback;
     private Mat mRgba;
     private Mat mGray;
+    private boolean checkBoxStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,10 @@ public class EdgeCamera extends AppCompatActivity implements CameraBridgeViewBas
                 }
             }
         };
+
+        Intent intent = getIntent();
+        checkBoxStatus = intent.getBooleanExtra("checkBoxStatus", false);
+
     }
 
     @Override
@@ -66,9 +72,13 @@ public class EdgeCamera extends AppCompatActivity implements CameraBridgeViewBas
 
         Mat edges = new Mat();
 
-        Imgproc.Canny(mRgba, edges, 80, 200);
-
-        return edges;
+        if (checkBoxStatus) {
+            Imgproc.Canny(mRgba, edges, 80, 200);
+            return edges;
+        }else{
+            Mat frame = inputFrame.rgba();
+            return frame;
+        }
     }
 
     @Override

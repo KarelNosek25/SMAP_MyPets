@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ public class EdgeCameraSettings extends AppCompatActivity implements ActivityCom
 
     private Button btnStartCamera;
     private Button btnBack;
+    private CheckBox check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +34,17 @@ public class EdgeCameraSettings extends AppCompatActivity implements ActivityCom
 
         btnStartCamera = findViewById(R.id.btn_startCamera);
         btnStartCamera.setOnClickListener(v -> openEdgeCamera());
+
+        check = findViewById(R.id.checkBox);
     }
 
     //otevření hranové kamery + kontrola práv
     private void openEdgeCamera() {
-        Intent i1 = new Intent(this, EdgeCamera.class);
+
+        boolean checkStatus = check.isChecked();
+        Intent i1 = new Intent(getApplicationContext(), EdgeCamera.class);
+        i1.putExtra("checkBoxStatus", checkStatus);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Nejsou udělena práva k používání fotoaparátu!", Toast.LENGTH_SHORT).show();
         } else {
