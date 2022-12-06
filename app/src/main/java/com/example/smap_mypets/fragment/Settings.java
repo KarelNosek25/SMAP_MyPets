@@ -29,9 +29,6 @@ public class Settings extends AppCompatActivity implements ActivityCompat.OnRequ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_settings);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Nastavení");
-
         btnAskRight = findViewById(R.id.btn_foto_ask);
         btnAskRight.setOnClickListener(v -> requestCamera());
 

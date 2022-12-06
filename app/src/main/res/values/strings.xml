@@ -15,7 +15,6 @@
     <string name="pes_kocka">pes/kočka</string>
     <string name="foxterier">Foxteriér</string>
     <string name="galerie">Galerie</string>
-    <string name="foto">Foto</string>
     <string name="mypets">MyPets</string>
     <string name="jmeno2">Jméno</string>
     <string name="heslo">Heslo</string>
@@ -32,4 +31,5 @@
     <string name="normalni_kamera">Normální kamera</string>
     <string name="hranova_kamera">Hranová kamera</string>
     <string name="start">Start</string>
+    <string name="foto">Foto</string>
 </resources>

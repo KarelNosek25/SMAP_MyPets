@@ -23,13 +23,12 @@
         app:titleTextColor="@color/secondaryColor" />
 
     <Button
-        android:id="@+id/edge_camera_button"
+        android:id="@+id/camera_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/navigation"
-        android:layout_below="@+id/normal_camera_button"
         android:layout_marginTop="40dp"
-        android:text="@string/hranova_kamera"
+        android:text="@string/foto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.example.smap_mypets.R;
@@ -23,10 +22,7 @@ public class Home extends AppCompatActivity implements ActivityCompat.OnRequestP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_home);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Výběr kamery");
-
-        btnCamera = findViewById(R.id.edge_camera_button);
+        btnCamera = findViewById(R.id.camera_button);
         btnCamera.setOnClickListener(v -> openEdgeCameraSettings());
 
         //spodní navigace (domů a nastavení)
