@@ -1,5 +1,6 @@
 package com.example.smap_mypets.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -12,17 +13,22 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
-public class NormalCamera extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class Camera extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
+    private Mat mRgba;
+    private Mat mGray;
+    private boolean checkBoxStatus; //nove
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_normal_camera);
+        setContentView(R.layout.fragment_camera);
 
         cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(View.VISIBLE);
@@ -42,11 +48,16 @@ public class NormalCamera extends AppCompatActivity implements CameraBridgeViewB
                 }
             }
         };
+
+        Intent intent = getIntent(); //nove
+        checkBoxStatus = intent.getBooleanExtra("checkBoxStatus", false); //nove
+
     }
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-
+        mRgba = new Mat(height, width, CvType.CV_8UC4);
+        mGray = new Mat(height, width, CvType.CV_8UC1);
     }
 
     @Override
@@ -56,8 +67,19 @@ public class NormalCamera extends AppCompatActivity implements CameraBridgeViewB
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        Mat frame = inputFrame.rgba();
-        return frame;
+        mRgba = inputFrame.rgba();
+        mGray = inputFrame.gray();
+
+        Mat edges = new Mat();
+
+        //nove
+        if (checkBoxStatus) {
+            Imgproc.Canny(mRgba, edges, 80, 200);
+            return edges;
+        }else{
+            Mat frame = inputFrame.rgba();
+            return frame;
+        }
     }
 
     @Override

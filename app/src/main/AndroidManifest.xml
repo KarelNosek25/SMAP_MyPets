@@ -29,10 +29,7 @@
         </activity>
 
         <activity
-            android:name=".fragment.NormalCamera"
-            android:exported="true"/>
-        <activity
-            android:name=".fragment.EdgeCamera"
+            android:name=".fragment.Camera"
             android:exported="true"/>
         <activity
             android:name=".fragment.Settings"
@@ -41,7 +38,7 @@
             android:name=".fragment.Home"
             android:exported="true"/>
         <activity
-            android:name=".fragment.EdgeCameraSettings"
+            android:name=".fragment.CameraSettings"
             android:exported="true"/>
     </application>
 </manifest>

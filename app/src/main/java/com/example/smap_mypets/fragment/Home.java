@@ -1,18 +1,13 @@
 package com.example.smap_mypets.fragment;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.smap_mypets.R;
 
@@ -20,8 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Home extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
-    private Button btnNormalCamera;
-    private Button btnEdgeCamera;
+    private Button btnCamera;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -32,11 +26,8 @@ public class Home extends AppCompatActivity implements ActivityCompat.OnRequestP
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Výběr kamery");
 
-        btnNormalCamera = findViewById(R.id.normal_camera_button);
-        btnNormalCamera.setOnClickListener(v -> openNormalCamera());
-
-        btnEdgeCamera = findViewById(R.id.edge_camera_button);
-        btnEdgeCamera.setOnClickListener(v -> openEdgeCameraSettings());
+        btnCamera = findViewById(R.id.edge_camera_button);
+        btnCamera.setOnClickListener(v -> openEdgeCameraSettings());
 
         //spodní navigace (domů a nastavení)
         BottomNavigationView bottomNav = findViewById(R.id.navigation);
@@ -60,19 +51,9 @@ public class Home extends AppCompatActivity implements ActivityCompat.OnRequestP
         startActivity(i1);
     }
 
-    //otevření normální kamery + kontrola práv
-    public void openNormalCamera() {
-        Intent i2 = new Intent(this, NormalCamera.class);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Nejsou udělena práva k používání fotoaparátu!", Toast.LENGTH_SHORT).show();
-        } else {
-            startActivity(i2);
-        }
-    }
-
     //otevření nastavení hranové kamery
     public void openEdgeCameraSettings() {
-        Intent i3 = new Intent(this, EdgeCameraSettings.class);
+        Intent i3 = new Intent(this, CameraSettings.class);
         startActivity(i3);
     }
 }
