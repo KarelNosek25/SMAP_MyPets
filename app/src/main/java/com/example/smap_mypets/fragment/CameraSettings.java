@@ -22,8 +22,6 @@ public class CameraSettings extends AppCompatActivity implements ActivityCompat.
     private Button btnBack;
     private RadioButton normalCamera, edgeCamera, small, big, medium, blurYes, blurNo, colorPhoto, blackWhitePhoto;
 
-    private RadioButton radio;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +46,7 @@ public class CameraSettings extends AppCompatActivity implements ActivityCompat.
         //základní nastavení tlačítek při načtení obrazovky
         edgeCamera.setChecked(true);
         medium.setChecked(true);
-        blurYes.setChecked(false);
-        colorPhoto.setChecked(true);
+        blackWhitePhoto.setChecked(true);
         blackWhitePhoto.setEnabled(false);
         colorPhoto.setEnabled(false);
         blurYes.setChecked(true);
@@ -57,13 +54,13 @@ public class CameraSettings extends AppCompatActivity implements ActivityCompat.
         //listenery na správné ovládání tlačítek
         normalCamera.setOnCheckedChangeListener((compoundButton, b) -> {
             edgeCamera.setChecked(!normalCamera.isChecked());
-            if(normalCamera.isChecked()){
+            if (normalCamera.isChecked()) {
                 small.setEnabled(false);
                 medium.setEnabled(false);
                 medium.setChecked(true);
                 big.setEnabled(false);
 
-            }else{
+            } else {
                 small.setEnabled(true);
                 medium.setEnabled(true);
                 big.setEnabled(true);
@@ -72,11 +69,11 @@ public class CameraSettings extends AppCompatActivity implements ActivityCompat.
 
         edgeCamera.setOnCheckedChangeListener((compoundButton, b) -> {
             normalCamera.setChecked(!edgeCamera.isChecked());
-            if(edgeCamera.isChecked()){
+            if (edgeCamera.isChecked()) {
                 blackWhitePhoto.setChecked(true);
                 blackWhitePhoto.setEnabled(false);
                 colorPhoto.setEnabled(false);
-            }else{
+            } else {
                 blackWhitePhoto.setEnabled(true);
                 colorPhoto.setEnabled(true);
             }
@@ -87,9 +84,34 @@ public class CameraSettings extends AppCompatActivity implements ActivityCompat.
     //otevření hranové kamery + kontrola práv
     private void openEdgeCamera() {
 
-        //boolean checkStatus = check.isChecked(); //nove
-        Intent i1 = new Intent(getApplicationContext(), Camera.class);//upravene
-        //i1.putExtra("checkBoxStatus", checkStatus);//nove
+        //kontrola co je a co není zvoleno
+        //druh kamery
+        boolean d1 = normalCamera.isChecked();
+        boolean d2 = edgeCamera.isChecked();
+
+        //citlivost kamery
+        boolean c1 = small.isChecked();
+        boolean c2 = medium.isChecked();
+        boolean c3 = big.isChecked();
+
+        //rozmazání
+        boolean r1 = blurYes.isChecked();
+        boolean r2 = blurNo.isChecked();
+
+        //druh obrazu
+        boolean o1 = colorPhoto.isChecked();
+        boolean o2 = blackWhitePhoto.isChecked();
+
+        Intent i1 = new Intent(getApplicationContext(), Camera.class);
+        i1.putExtra("normalStatus", d1);
+        i1.putExtra("edgeStatus", d2);
+        i1.putExtra("smallStatus", c1);
+        i1.putExtra("mediumStatus", c2);
+        i1.putExtra("bigStatus", c3);
+        i1.putExtra("blurYesStatus", r1);
+        i1.putExtra("blurNoStatus", r2);
+        i1.putExtra("colorStatus", o1);
+        i1.putExtra("blackWhiteStatus", o2);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Nejsou udělena práva k používání fotoaparátu!", Toast.LENGTH_SHORT).show();
