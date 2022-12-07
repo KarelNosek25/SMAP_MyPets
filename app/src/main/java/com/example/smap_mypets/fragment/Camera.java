@@ -1,18 +1,20 @@
 package com.example.smap_mypets.fragment;
 
-import static android.content.ContentValues.TAG;
-import static org.opencv.core.CvType.CV_8UC1;
+import static org.opencv.core.Core.ROTATE_90_CLOCKWISE;
 import static org.opencv.imgproc.Imgproc.Canny;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.smap_mypets.R;
 
@@ -27,18 +29,18 @@ import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Camera extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2 {
+public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCameraViewListener2, ActivityCompat.OnRequestPermissionsResultCallback {
 
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
     private boolean normal, edge, small, medium, big, blurYes, blurNo, color, blackWhite;
 
-    private ImageView btnCapture;
-    private int ambilGamba = 0;
-    private Mat mRgba;
+    private ImageView btnCapture, btnBack;
+    private int take_image = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,28 +82,39 @@ public class Camera extends AppCompatActivity implements CameraBridgeViewBase.Cv
         blackWhite = intent.getBooleanExtra("blackWhiteStatus", true);
 
         btnCapture = findViewById(R.id.capBtn);
-        btnCapture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Foto", Toast.LENGTH_SHORT).show();
-                ambilGamba = 1;
+        btnCapture.setOnClickListener(view -> {
+            //kontrola práv na úložiště
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getApplicationContext(), "Nejsou udělena práva k přístupu do úložiště", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Úspěšně vyfoceno", Toast.LENGTH_SHORT).show();
+                if (take_image == 0) {
+                    take_image = 1;
+                } else {
+                    take_image = 0;
+                }
             }
+        });
+
+        //tlačtko zpět
+        btnBack = findViewById(R.id.backBtn);
+        btnBack.setOnClickListener(view -> {
+            Intent i1 = new Intent(this, Home.class);
+            startActivity(i1);
         });
     }
 
     @Override
     public void onCameraViewStarted(int width, int height) {
-
     }
 
     @Override
     public void onCameraViewStopped() {
-
     }
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        mRgba = inputFrame.rgba();
+        Mat mRgba = inputFrame.rgba();
 
         //barevnost obrazu
         if (blackWhite) {
@@ -121,30 +134,35 @@ public class Camera extends AppCompatActivity implements CameraBridgeViewBase.Cv
         } else if (edge && big) {
             Canny(mRgba, mRgba, 50, 50);
         }
-        ambilGamba = fungsiCaptureGambar(ambilGamba, mRgba);
+
+        take_image = takePicture(take_image, mRgba);
         return mRgba;
     }
 
-    private int fungsiCaptureGambar(int ambilGambar, Mat mRgba) {
-        if (ambilGambar == 1) {
+    //uložení fotky
+    private int takePicture(int takeImage, Mat mRgba) {
+        if (takeImage == 1) {
 
-            boolean sukses = true;
+            //otočení fotky
+            Core.flip(mRgba.t(), mRgba, 1);
 
-            Mat save_mat = new Mat();
-            Core.flip(mRgba.t(), save_mat, 1);
+            //znovunačtení fotoaparátu (bez toho bychom se vrátili na "CameraSettings")
+            Intent i2 = new Intent(this, Camera.class);
+            startActivity(i2);
 
-            if(color){
+            if (color) {
                 Imgproc.cvtColor(mRgba, mRgba, Imgproc.COLOR_RGBA2BGRA);
             }
 
+            //uložení do telefonu (interniUloziste/Android/data/com.example.smap_mypets/files/Pictures/)
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-            String waktuSekarang = sdf.format(new Date());
-            String fileName = getExternalFilesDir(Environment.DIRECTORY_DCIM) + "/" + waktuSekarang + ".jpg";
+            String date = sdf.format(new Date());
+            String fileName = getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + date + ".jpg";
 
-            Boolean cekSave = Imgcodecs.imwrite(fileName, mRgba);
-            ambilGambar = 0;
+            Imgcodecs.imwrite(fileName, mRgba);
+            takeImage = 0;
         }
-        return ambilGambar;
+        return takeImage;
     }
 
     @Override

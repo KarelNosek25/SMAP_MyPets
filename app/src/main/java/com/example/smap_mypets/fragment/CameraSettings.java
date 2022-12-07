@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.smap_mypets.R;
 
-public class CameraSettings extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class CameraSettings extends HideBottomBar implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     private Button btnStartCamera;
     private Button btnBack;

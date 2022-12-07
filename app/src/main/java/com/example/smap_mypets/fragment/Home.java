@@ -12,7 +12,7 @@ import com.example.smap_mypets.R;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Home extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class Home extends AppCompatActivity {
 
     private Button btnCamera;
 

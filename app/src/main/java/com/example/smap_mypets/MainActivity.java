@@ -19,11 +19,12 @@ import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
+import com.example.smap_mypets.fragment.HideBottomBar;
 import com.example.smap_mypets.fragment.Home;
 
 import java.util.concurrent.Executor;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends HideBottomBar {
 
     EditText username, password;
     BiometricManager biometricManager;
