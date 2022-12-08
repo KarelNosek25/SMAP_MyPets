@@ -63,7 +63,7 @@ public class Settings extends AppCompatActivity implements ActivityCompat.OnRequ
             // Požádáme o práva
             int PERMISSION_REQUEST_CAMERA = 0;
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
-            Toast.makeText(this, "Požádáno o práva na fotoaparát.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Práva na fotoaparát přidělena.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -77,7 +77,7 @@ public class Settings extends AppCompatActivity implements ActivityCompat.OnRequ
             int PERMISSION_REQUEST_STORAGE = 0;
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
-            Toast.makeText(this, "Požádáno o práva na úložiště.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Práva na úložiště přidělena.", Toast.LENGTH_SHORT).show();
         }
     }
 }

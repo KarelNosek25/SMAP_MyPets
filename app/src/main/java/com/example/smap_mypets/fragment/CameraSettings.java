@@ -2,10 +2,12 @@ package com.example.smap_mypets.fragment;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -43,17 +45,22 @@ public class CameraSettings extends HideBottomBar implements ActivityCompat.OnRe
         colorPhoto = findViewById(R.id.colorPhoto);
         blackWhitePhoto = findViewById(R.id.blackWhitePhoto);
 
-        //základní nastavení tlačítek při načtení obrazovky
-        edgeCamera.setChecked(true);
-        medium.setChecked(true);
-        blackWhitePhoto.setChecked(true);
-        blackWhitePhoto.setEnabled(false);
-        colorPhoto.setEnabled(false);
-        blurYes.setChecked(true);
+        //zachování stavu tlačítek na základě předchozí hodnoty (např. při opuštění stránky)
+        normalCamera.setChecked(Update("btnOne"));
+        edgeCamera.setChecked(Update("btnTwo"));
+        small.setChecked(Update("btnThree"));
+        big.setChecked(Update("btnFour"));
+        medium.setChecked(Update("btnFive"));
+        blurYes.setChecked(Update("btnSix"));
+        blurNo.setChecked(Update("btnSeven"));
+        colorPhoto.setChecked(Update("btnEight"));
+        blackWhitePhoto.setChecked(Update("btnNine"));
 
-        //listenery na správné ovládání tlačítek
-        normalCamera.setOnCheckedChangeListener((compoundButton, b) -> {
-            edgeCamera.setChecked(!normalCamera.isChecked());
+        checkCameraSettings();
+
+        //správné nastavení listenerů všech tlačítek "Radio Button"
+        normalCamera.setOnCheckedChangeListener((compoundButton, btnOne) -> {
+            SavePreferences("btnOne", btnOne);
             if (normalCamera.isChecked()) {
                 small.setEnabled(false);
                 medium.setEnabled(false);
@@ -67,8 +74,8 @@ public class CameraSettings extends HideBottomBar implements ActivityCompat.OnRe
             }
         });
 
-        edgeCamera.setOnCheckedChangeListener((compoundButton, b) -> {
-            normalCamera.setChecked(!edgeCamera.isChecked());
+        edgeCamera.setOnCheckedChangeListener((compoundButton, btnTwo) -> {
+            SavePreferences("btnTwo", btnTwo);
             if (edgeCamera.isChecked()) {
                 blackWhitePhoto.setChecked(true);
                 blackWhitePhoto.setEnabled(false);
@@ -78,8 +85,51 @@ public class CameraSettings extends HideBottomBar implements ActivityCompat.OnRe
                 colorPhoto.setEnabled(true);
             }
         });
+
+        small.setOnCheckedChangeListener((compoundButton, btnThree) -> SavePreferences("btnThree", btnThree));
+        big.setOnCheckedChangeListener((compoundButton, btnFour) -> SavePreferences("btnFour", btnFour));
+        medium.setOnCheckedChangeListener((compoundButton, btnFive) -> SavePreferences("btnFive", btnFive));
+        blurYes.setOnCheckedChangeListener((compoundButton, btnSix) -> SavePreferences("btnSix", btnSix));
+        blurNo.setOnCheckedChangeListener((compoundButton, btnSeven) -> SavePreferences("btnSeven", btnSeven));
+        colorPhoto.setOnCheckedChangeListener((compoundButton, btnEight) -> SavePreferences("btnEight", btnEight));
+        blackWhitePhoto.setOnCheckedChangeListener((compoundButton, btnNine) -> SavePreferences("btnNine", btnNine));
     }
 
+    //při znovuspuštění obrazovky se správně nastaví dostupnost různého nastavení
+    private void checkCameraSettings() {
+        if (edgeCamera.isChecked()) {
+            blackWhitePhoto.setChecked(true);
+            blackWhitePhoto.setEnabled(false);
+            colorPhoto.setEnabled(false);
+        } else {
+            blackWhitePhoto.setEnabled(true);
+            colorPhoto.setEnabled(true);
+        }
+        if (normalCamera.isChecked()) {
+            small.setEnabled(false);
+            medium.setEnabled(false);
+            medium.setChecked(true);
+            big.setEnabled(false);
+
+        } else {
+            small.setEnabled(true);
+            medium.setEnabled(true);
+            big.setEnabled(true);
+        }
+    }
+
+    //metody potřebné k zapamatování si stavu každého "Radio button"
+    private void SavePreferences(String key, boolean value) {
+        SharedPreferences sp = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    private boolean Update(String key) {
+        SharedPreferences sp = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
+        return sp.getBoolean(key, false);
+    }
 
     //otevření hranové kamery + kontrola práv
     private void openEdgeCamera() {
@@ -102,6 +152,7 @@ public class CameraSettings extends HideBottomBar implements ActivityCompat.OnRe
         boolean o1 = colorPhoto.isChecked();
         boolean o2 = blackWhitePhoto.isChecked();
 
+        //odeslání stavu nastavení do kamery
         Intent i1 = new Intent(getApplicationContext(), Camera.class);
         i1.putExtra("normalStatus", d1);
         i1.putExtra("edgeStatus", d2);
@@ -113,10 +164,17 @@ public class CameraSettings extends HideBottomBar implements ActivityCompat.OnRe
         i1.putExtra("colorStatus", o1);
         i1.putExtra("blackWhiteStatus", o2);
 
+        //spouštění kamery + kontrola práv a správného nastavení kamery
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Nejsou udělena práva k používání fotoaparátu!", Toast.LENGTH_SHORT).show();
         } else {
-            startActivity(i1);
+            //kontrola toho, jestli je při spuštění fotoaparátu zaškrtnuto všechno
+            if ((normalCamera.isChecked() || edgeCamera.isChecked()) && (small.isChecked() || medium.isChecked() || big.isChecked()) &&
+                    (blurYes.isChecked() || blurNo.isChecked()) && (colorPhoto.isChecked() || blackWhitePhoto.isChecked())) {
+                startActivity(i1);
+            } else {
+                Toast.makeText(this, "Nemáte zaškrtnuty všechna pole!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

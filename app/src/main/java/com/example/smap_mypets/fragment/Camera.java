@@ -99,7 +99,7 @@ public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCame
         //tlačtko zpět
         btnBack = findViewById(R.id.backBtn);
         btnBack.setOnClickListener(view -> {
-            Intent i1 = new Intent(this, Home.class);
+            Intent i1 = new Intent(this, CameraSettings.class);
             startActivity(i1);
         });
     }
@@ -144,11 +144,11 @@ public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCame
         if (takeImage == 1) {
 
             //otočení fotky
-            Core.flip(mRgba.t(), mRgba, 1);
+            //Core.flip(mRgba.t(), mRgba, 1);
 
             //znovunačtení fotoaparátu (bez toho bychom se vrátili na "CameraSettings")
-            Intent i2 = new Intent(this, Camera.class);
-            startActivity(i2);
+            //Intent i2 = new Intent(this, Camera.class);
+            //startActivity(i2);
 
             if (color) {
                 Imgproc.cvtColor(mRgba, mRgba, Imgproc.COLOR_RGBA2BGRA);
