@@ -19,7 +19,6 @@ public class Settings extends AppCompatActivity implements ActivityCompat.OnRequ
 
     private Button btnAskRight, btnAskStorage;
 
-
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ public class Settings extends AppCompatActivity implements ActivityCompat.OnRequ
             // Požádáme o práva
             int PERMISSION_REQUEST_CAMERA = 0;
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
-                Toast.makeText(this, "Práva na fotoaparát přidělena.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Práva na fotoaparát přidělena.", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,6 +1,5 @@
 package com.example.smap_mypets.fragment;
 
-import static org.opencv.core.Core.ROTATE_90_CLOCKWISE;
 import static org.opencv.imgproc.Imgproc.Canny;
 
 import android.Manifest;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -29,7 +27,6 @@ import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
