@@ -41,6 +41,7 @@ public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCame
 
     private ImageView btnCapture, btnBack;
     private int take_image = 0;
+    private Mat mRgba;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +88,12 @@ public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCame
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(getApplicationContext(), "Nejsou udělena práva k přístupu do úložiště", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getApplicationContext(), "Úspěšně vyfoceno", Toast.LENGTH_SHORT).show();
                 if (take_image == 0) {
                     take_image = 1;
                 } else {
                     take_image = 0;
                 }
+                Toast.makeText(getApplicationContext(), "Úspěšně vyfoceno", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -106,15 +107,17 @@ public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCame
 
     @Override
     public void onCameraViewStarted(int width, int height) {
+        mRgba = new Mat(height, width, CvType.CV_8UC4);
     }
 
     @Override
     public void onCameraViewStopped() {
+        mRgba.release();
     }
 
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-        Mat mRgba = inputFrame.rgba();
+        mRgba = inputFrame.rgba();
 
         //barevnost obrazu
         if (blackWhite) {
@@ -140,29 +143,23 @@ public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCame
     }
 
     //uložení fotky
-    private int takePicture(int takeImage, Mat mRgba) {
-        if (takeImage == 1) {
-
-            //otočení fotky
-            //Core.flip(mRgba.t(), mRgba, 1);
-
-            //znovunačtení fotoaparátu (bez toho bychom se vrátili na "CameraSettings")
-            //Intent i2 = new Intent(this, Camera.class);
-            //startActivity(i2);
+    private int takePicture(int take_image, Mat mRgba) {
+        if (take_image == 1) {
+            Mat save_mat = new Mat();
+            Core.flip(mRgba.t(), save_mat, 1);
 
             if (color) {
-                Imgproc.cvtColor(mRgba, mRgba, Imgproc.COLOR_RGBA2BGRA);
+                Imgproc.cvtColor(save_mat, save_mat, Imgproc.COLOR_RGBA2BGRA);
             }
 
-            //uložení do telefonu (interniUloziste/Android/data/com.example.smap_mypets/files/Pictures/)
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String date = sdf.format(new Date());
             String fileName = getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + date + ".jpg";
 
-            Imgcodecs.imwrite(fileName, mRgba);
-            takeImage = 0;
+            Imgcodecs.imwrite(fileName, save_mat);
+            take_image = 0;
         }
-        return takeImage;
+        return take_image;
     }
 
     @Override
