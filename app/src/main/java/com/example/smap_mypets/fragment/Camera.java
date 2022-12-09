@@ -45,6 +45,7 @@ public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCame
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_camera);
 
+        //fungování kamery
         cameraBridgeViewBase = (JavaCameraView) findViewById(R.id.CameraView);
         cameraBridgeViewBase.setVisibility(View.VISIBLE);
         cameraBridgeViewBase.setCvCameraViewListener(this);
@@ -142,6 +143,8 @@ public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCame
     //uložení fotky
     private int takePicture(int take_image, Mat mRgba) {
         if (take_image == 1) {
+
+            //otočení fotky (po vyfocení by jinak byla naležato)
             Mat save_mat = new Mat();
             Core.flip(mRgba.t(), save_mat, 1);
 
@@ -149,10 +152,12 @@ public class Camera extends HideBottomBar implements CameraBridgeViewBase.CvCame
                 Imgproc.cvtColor(save_mat, save_mat, Imgproc.COLOR_RGBA2BGRA);
             }
 
+            //přidání unikátního jména fotce
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String date = sdf.format(new Date());
             String fileName = getExternalFilesDir(Environment.DIRECTORY_PICTURES) + "/" + date + ".jpg";
 
+            //uložení konkrétní fotky
             Imgcodecs.imwrite(fileName, save_mat);
             take_image = 0;
         }

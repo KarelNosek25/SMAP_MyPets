@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+//třída díky které bude skryté dolní lišta na některých obrazovkách
 public abstract class HideBottomBar extends AppCompatActivity {
 
     @Override

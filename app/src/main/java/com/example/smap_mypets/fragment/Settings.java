@@ -56,10 +56,10 @@ public class Settings extends AppCompatActivity implements ActivityCompat.OnRequ
     //požádání o přidělení práv
     private void requestCamera() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            // Práva máme, není potřeba o ně žádat
+            // Práva na foťák máme, není potřeba o ně žádat
             Toast.makeText(this, "Práva na fotoaparát jsou již přidělena.", Toast.LENGTH_SHORT).show();
         } else {
-            // Požádáme o práva
+            // Požádáme o práva na fotoaparát
             int PERMISSION_REQUEST_CAMERA = 0;
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
             Toast.makeText(this, "Práva na fotoaparát přidělena.", Toast.LENGTH_SHORT).show();
@@ -69,10 +69,10 @@ public class Settings extends AppCompatActivity implements ActivityCompat.OnRequ
     //požádání o přidělení práv
     private void requestStorage() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            // Práva máme, není potřeba o ně žádat
+            // Práva na úloiště máme, není potřeba o ně žádat
             Toast.makeText(this, "Práva na úložiště jsou již přidělena.", Toast.LENGTH_SHORT).show();
         } else {
-            // Požádáme o práva
+            // Požádáme o práva na přístup k úložišti
             int PERMISSION_REQUEST_STORAGE = 0;
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
